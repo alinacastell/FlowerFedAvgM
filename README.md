@@ -52,7 +52,19 @@ Then, run:
 ```python
 # this will run with the default setting
 poetry run python -m fedavgm.main 
+```
 
-# will set the FedAvg with 1000 clients and 50 rounds
-poetry run python -m fedavgm.main strategy=fedavg num_clients=1000 num_rounds=50
+The linear plot has been run with the following experiments (if the strategy is not specified, the default is `strategy=custom-fedavgm`):
+```bash
+# Modifying the concentration levels
+poetry run python -m fedavgm.main dataset=cifar10 noniid.concentration=10
+```
+Then, transforming the results from pickle (.pkl) file to JSON file so they could be stored in a readable way at `experimentresults.md` and in their individual locations on their *outputs* folder.
+
+Next, run the concentration plot `poetry run python -m fedavgm.utils` to observe and compare results. We have found out that we obtain the exact same results with exception to the plot with concentration levels of 1e-9. Find here the picture with reproducing results.
+(Saved at /.../flower/baselines/fedavgm/_static/concentration_cifar10_v3.png)
+
+After that, used the accuracy results for plotting with respect to the method FedAvgM using the following commmand line:
+```bash
+poetry run python -m fedavgm.main strategy=fedavg dataset=cifar10 noniid.concentration=10
 ```
