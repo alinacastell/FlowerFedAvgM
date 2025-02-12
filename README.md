@@ -46,4 +46,13 @@ pip install tensorflow
 Ensure that there are no conflicts with the libraries by running `pip check`. Solve if any conflicts arise.
 
 ## Running the Experiments
-Make sure that you are on the correct directory of the `flower` repository: `cd /.../flower/baselines/fedavgm` and that the Poetry environment is activated from this directory `poetry shell`
+Make sure that you are on the correct directory of the `flower` repository: `cd /.../flower/baselines/fedavgm` and that the Poetry environment is activated `poetry shell` from this directory.
+
+Then, run:
+```python
+# this will run with the default setting
+poetry run python -m fedavgm.main 
+
+# will set the FedAvg with 1000 clients and 50 rounds
+poetry run python -m fedavgm.main strategy=fedavg num_clients=1000 num_rounds=50
+```
