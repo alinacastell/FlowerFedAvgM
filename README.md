@@ -106,10 +106,11 @@ dataset=cifar10 client.lr=0.003 server.momentum=0.9
 
 The command used to run this experiment is:
 ```bash
-python -m fedavgm.main --multirun client.local_epochs=1 noniid.concentration=1 \
-strategy=custom-fedavgm server.reporting_fraction=0.05 num_rounds=100 num_clients=100 \
-dataset=cifar10 client.lr=0.0001,0.0003,0.001,0.003,0.01,0.03,0.1,0.3 \
-server.momentum=0.7,0.9,0.97,0.99,0.997
+poetry run python -m fedavgm.main --multirun client.local_epochs=1 \
+noniid.concentration=1 strategy=custom-fedavgm \
+server.reporting_fraction=0.05 num_rounds=100 num_clients=100 \
+client.lr=0.0001,0.0003,0.001,0.003,0.01,0.03,0.1,0.3 \
+dataset=cifar10 server.momentum=0.7,0.9,0.97,0.99,0.997
 ```
 
 #### Reading and storing results
