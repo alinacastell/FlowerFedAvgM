@@ -77,20 +77,39 @@ The results are based on the accuracy measure for every concentration level by c
 Since we could not run the number of rounds specified in the paper, we added a comparison of accuracy results depending on the number of evaluation round.
 
 #### Running commands
-Here are the commands used for the different number of evaluation runs. To run with different concentration levels you only need to change the `noniid.concentration=` at every run.
+Here are the commands used for the different number of evaluation runs. To run with different concentration levels you need to run the different commands for every level.
 
-- Number of rounds 5:
+**Number of rounds 5:**
+
 With this command we changed the strategy to `strategy=custom-fedavgm` after running all different concentration levels with the strategy `fedavg`.
 ```bash
 poetry run python -m fedavgm.main strategy=fedavg dataset=cifar10 noniid.concentration=10 num_rounds=5
 ```
 
-- Number of rounds 50:
+**Number of rounds 50:**
 With this command we evaluate both methods in a single run.
+
+- Concentration = 1:
 ```bash
-poetry run python -m fedavgm.main --multirun client.local_epochs=1 noniid.concentration=0.01 strategy=custom-fedavgm,fedavg \
+poetry run python -m fedavgm.main --multirun client.local_epochs=1 noniid.concentration=1 strategy=custom-fedavgm,fedavg \ 
+server.reporting_fraction=0.05 num_rounds=50 num_clients=100 \
+dataset=cifar10 client.lr=0.0003 server.momentum=0.997
+```
+- Concentration = 10:
+```bash
+poetry run python -m fedavgm.main --multirun client.local_epochs=1 noniid.concentration=10 strategy=custom-fedavgm,fedavg \
 server.reporting_fraction=0.05 num_rounds=50 num_clients=100 \
 dataset=cifar10 client.lr=0.003 server.momentum=0.9
+```
+
+### Learning Rates comparison for Custom FedAvgM
+
+The command used to run this experiment is:
+```bash
+python -m fedavgm.main --multirun client.local_epochs=1 noniid.concentration=1 \
+strategy=custom-fedavgm server.reporting_fraction=0.05 num_rounds=100 num_clients=100 \
+dataset=cifar10 client.lr=0.0001,0.0003,0.001,0.003,0.01,0.03,0.1,0.3 \
+server.momentum=0.7,0.9,0.97,0.99,0.997
 ```
 
 #### Reading and storing results
@@ -98,7 +117,7 @@ The `fedavgm.main` implementation from the `FedAvgM` baseline of the `Flower` fr
 
 We implemented a *Python* script to read the pickle files into a *JSON* format, we moved them to another folder called `multirun-jsonresults` where we had two files for the two strategies (custom-fedavgm and fedavg), in there we stored all the corresponding pickle files. To run the script that transforms pickle files to JSON format go to `yourrepofolder/` run:
 ```bash
-python3 viewpickle.py flower/baselines/fedavgm/multirun/(yourdate)/(yourtime)
+python3 viewpickle.py flower/baselines/fedavgm/multirun/(yourdate)/(yourtime)/(yourpicklefile)
 ```
 
 Then, we implemented a function that reads the JSON file values, for every file located in each method folder, reads the loss and accuracy, and adds them into a list of values. This list of values is used to plot the results plots of the next subsection.
