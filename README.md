@@ -97,7 +97,8 @@ dataset=cifar10 client.lr=0.0003 server.momentum=0.997
 ```
 - Concentration = 10:
 ```bash
-poetry run python -m fedavgm.main --multirun client.local_epochs=1 noniid.concentration=10 strategy=custom-fedavgm,fedavg \
+poetry run python -m fedavgm.main --multirun client.local_epochs=1 \
+noniid.concentration=10 strategy=custom-fedavgm,fedavg \
 server.reporting_fraction=0.05 num_rounds=50 num_clients=100 \
 dataset=cifar10 client.lr=0.003 server.momentum=0.9
 ```
