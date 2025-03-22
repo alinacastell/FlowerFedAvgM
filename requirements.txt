@@ -1,0 +1,5 @@
+flwr
+numpy==1.26.4
+hydra-core --upgrade
+tensorflow
+matplotlib
